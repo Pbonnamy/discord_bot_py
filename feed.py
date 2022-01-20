@@ -1,11 +1,17 @@
+import requests
+from bs4 import BeautifulSoup
+
+
 async def get_patch_note(discord, message):
+    info = patch_note_info()
+
     embed = discord.Embed(
         title="NOTES DE PATCH 12.1",
         url="https://www.leagueoflegends.com/fr-fr/news/game-updates/patch-12-1-notes/"
     )
 
     embed.set_image(
-        url="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt021e5a00ec591880/61d47d0595cb603e6b5ce067/LOL_12.1-Infographic_1920x1080_JCao_v05_FR.jpg"
+        url=info['img']
     )
 
     embed.set_author(
@@ -14,3 +20,16 @@ async def get_patch_note(discord, message):
     )
 
     await message.channel.send(embed=embed)
+
+
+def patch_note_info():
+    url = "https://www.leagueoflegends.com/fr-fr/news/game-updates/patch-12-1-notes/"
+    req = requests.get(url)
+
+    soup = BeautifulSoup(req.content, features="html.parser")
+
+    info = {}
+
+    info['img'] = soup.find("a", class_="cboxElement").find("img")['src']
+
+    return info

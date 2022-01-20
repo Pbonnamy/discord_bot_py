@@ -28,5 +28,4 @@ async def on_message(message):
     if message.content == '!patch':
         await feed.get_patch_note(discord, message)
 
-
 client.run(TOKEN)
