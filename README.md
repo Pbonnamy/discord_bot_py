@@ -16,5 +16,5 @@
 ## Structure du .env
 
 - TOKEN="your_token"
-- CHANNEL="your_command_channel"
-- LOG_CHANNEL="your_log_channel"
+- CHANNEL=your_command_channel
+- LOG_CHANNEL=your_log_channel
