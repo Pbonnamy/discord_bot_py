@@ -11,7 +11,7 @@ async def create_database(client):
 
     dbcursor = mydb.cursor()
 
-    dbcursor.execute("CREATE DATABASE IF NOT EXISTS " + settings.DB_NAME)
+    dbcursor.execute("CREATE DATABASE IF NOT EXISTS " + settings.DB_NAME + " CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
 
     await client.get_channel(settings.LOG_CHANNEL).send('Database : ' + settings.DB_NAME + ' **initialised**')
 
