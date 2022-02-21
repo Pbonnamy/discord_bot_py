@@ -1,8 +1,11 @@
+import discord
 import requests
 from bs4 import BeautifulSoup
 
+import settings
 
-async def get_patch_note(discord, message):
+
+async def get_patch_note(client):
     info = patch_note_info()
 
     embed = discord.Embed(
@@ -19,7 +22,18 @@ async def get_patch_note(discord, message):
         icon_url="https://preview.redd.it/itq8rpld8va51.png?width=256&format=png&auto=webp&s=9701ba6228c29bf2d7e3dfffd45b9a3562507289"
     )
 
-    await message.channel.send(embed=embed)
+    sql = "SELECT * FROM feeds WHERE title LIKE '%" + info['name'] + "%'"
+    settings.DB_CURSOR.execute(sql)
+    result = settings.DB_CURSOR.fetchall()
+
+    if len(result) == 0:
+        sql = "INSERT INTO feeds (title, feeds_types_id) VALUES (%s, %s)"
+        val = (info['name'], 1)
+
+        settings.DB_CURSOR.execute(sql, val)
+        settings.DB.commit()
+
+        await client.get_channel(settings.FEED_CHANNEL).send(embed=embed)
 
 
 def patch_note_info():
