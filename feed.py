@@ -54,3 +54,44 @@ def patch_note_info():
     info['img'] = soup.find("a", class_="cboxElement").find("img")['src']
 
     return info
+
+
+async def get_esport_match(client):
+    url = "https://www2.esportstatspro.com/en-us/stats/lol/Global/Match/Results?start=1&limit=5&regionId=50"
+    res = requests.get(url).json()
+
+    for match in res['Data']:
+
+        if match['TeamA']['Score'] > match['TeamB']['Score']:
+            winner = 'TeamA'
+        else:
+            winner = 'TeamB'
+
+        embed = discord.Embed(
+            title=match['TeamA']['Name'] + '   VS   ' + match['TeamB']['Name'],
+        )
+
+        embed.set_author(
+            name=match['LeagueModel']['Name'],
+            icon_url=match['LeagueModel']['Logo']
+        )
+
+        embed.add_field(
+            name='-------------------------------------------------------------------------------\n'
+                 '\u200b',
+            value='```' + match['TeamA']['Name'] + ' : ' + str(match['TeamA']['Score']) + '\n\n' +
+                  match['TeamB']['Name'] + ' : ' + str(match['TeamB']['Score']) + '```',
+            inline=False
+        )
+
+        embed.add_field(
+            name='\u200b',
+            value='**' + match[winner]['Name'] + ' WIN**',
+            inline=False
+        )
+
+        embed.set_thumbnail(
+            url=match[winner]['Logo']
+        )
+
+        await client.get_channel(settings.FEED_CHANNEL).send(embed=embed)
