@@ -1,7 +1,6 @@
 import discord
 import requests
 from bs4 import BeautifulSoup
-
 import settings
 
 
@@ -61,37 +60,54 @@ async def get_esport_match(client):
     res = requests.get(url).json()
 
     for match in res['Data']:
+        title = 'match - ' + str(match['Id'])
+        sql = "SELECT id FROM feeds WHERE title LIKE '%" + title + "%'"
+        settings.DB_CURSOR.execute(sql)
+        result = settings.DB_CURSOR.fetchall()
 
-        if match['TeamA']['Score'] > match['TeamB']['Score']:
-            winner = 'TeamA'
-        else:
-            winner = 'TeamB'
+        if len(result) == 0:
+            embed = build_match_embed(match)
 
-        embed = discord.Embed(
-            title=match['TeamA']['Name'] + '   VS   ' + match['TeamB']['Name'],
-        )
+            sql = "INSERT INTO feeds (title, feeds_types_id) VALUES (%s, %s)"
+            val = (title, 2)
 
-        embed.set_author(
-            name=match['LeagueModel']['Name'],
-            icon_url=match['LeagueModel']['Logo']
-        )
+            settings.DB_CURSOR.execute(sql, val)
+            settings.DB.commit()
 
-        embed.add_field(
-            name='-------------------------------------------------------------------------------\n'
-                 '\u200b',
-            value='```' + match['TeamA']['Name'] + ' : ' + str(match['TeamA']['Score']) + '\n\n' +
-                  match['TeamB']['Name'] + ' : ' + str(match['TeamB']['Score']) + '```',
-            inline=False
-        )
+            await client.get_channel(settings.FEED_CHANNEL).send(embed=embed)
 
-        embed.add_field(
-            name='\u200b',
-            value='**' + match[winner]['Name'] + ' WIN**',
-            inline=False
-        )
 
-        embed.set_thumbnail(
-            url=match[winner]['Logo']
-        )
+def build_match_embed(match):
+    if match['TeamA']['Score'] > match['TeamB']['Score']:
+        winner = 'TeamA'
+    else:
+        winner = 'TeamB'
 
-        await client.get_channel(settings.FEED_CHANNEL).send(embed=embed)
+    embed = discord.Embed(
+        title=match['TeamA']['Name'] + '   VS   ' + match['TeamB']['Name'],
+    )
+
+    embed.set_author(
+        name=match['LeagueModel']['Name'],
+        icon_url=match['LeagueModel']['Logo']
+    )
+
+    embed.add_field(
+        name='-------------------------------------------------------------------------------\n'
+             '\u200b',
+        value='```' + match['TeamA']['Name'] + ' : ' + str(match['TeamA']['Score']) + '\n\n' +
+              match['TeamB']['Name'] + ' : ' + str(match['TeamB']['Score']) + '```',
+        inline=False
+    )
+
+    embed.add_field(
+        name='\u200b',
+        value='**' + match[winner]['Name'] + ' WIN**',
+        inline=False
+    )
+
+    embed.set_thumbnail(
+        url=match[winner]['Logo']
+    )
+
+    return embed
