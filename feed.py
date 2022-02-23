@@ -2,6 +2,8 @@ import discord
 import requests
 from bs4 import BeautifulSoup
 import settings
+import threading
+import asyncio
 
 
 async def get_patch_note(client):
@@ -33,6 +35,9 @@ async def get_patch_note(client):
         settings.DB.commit()
 
         await client.get_channel(settings.FEED_CHANNEL).send(embed=embed)
+
+    await asyncio.sleep(60 * 60)  # every hour
+    threading.Thread(target=asyncio.run, args=(get_patch_note(client),)).start()
 
 
 def patch_note_info():
@@ -75,6 +80,9 @@ async def get_esport_match(client):
             settings.DB.commit()
 
             await client.get_channel(settings.FEED_CHANNEL).send(embed=embed)
+
+    await asyncio.sleep(60 * 15)  # every 15 min
+    threading.Thread(target=asyncio.run, args=(get_esport_match(client),)).start()
 
 
 def build_match_embed(match):
