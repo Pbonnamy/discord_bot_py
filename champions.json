@@ -1,0 +1,14 @@
+[
+  {
+    "name" : "xerath",
+    "image" : "xerath.jpg",
+    "points" : 1000,
+    "owned_by": ""
+  },
+  {
+    "name" : "ekko",
+    "image" : "ekko.jpg",
+    "points" : 600,
+    "owned_by": ""
+  }
+]
