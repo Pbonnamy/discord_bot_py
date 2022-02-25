@@ -30,4 +30,7 @@ async def on_message(message):
         if message.content == '!guess':
             await guess_champion.guess(client)
 
+        if message.content == '!help':
+            await settings.help(client)
+
 client.run(settings.TOKEN)

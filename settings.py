@@ -1,7 +1,6 @@
 import os
-
-import discord
 import mysql
+import discord
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -20,6 +19,15 @@ FEED_CHANNEL = int(os.getenv('FEED_CHANNEL'))
 CHANNEL = int(os.getenv('CHANNEL'))
 
 
+commands = [
+    "```Feed patchnote : récupération toutes les heures```",
+    "```Feed esport : récupération toutes les 15 minutes```",
+    "```!hello : tester le bot```",
+    "```!help : lister les commandes du bot```",
+    "```!guess : lancer le mini-jeu 'Who's that champion'```",
+]
+
+
 def connect_db():
     global DB
     global DB_CURSOR
@@ -32,3 +40,19 @@ def connect_db():
     )
 
     DB_CURSOR = DB.cursor()
+
+
+async def help(client):
+
+    embed = discord.Embed(
+        title="Liste des fonctionnalités",
+    )
+
+    for command in commands:
+        embed.add_field(
+            name='\u200b',
+            value=command,
+            inline=False
+        )
+
+    await client.get_channel(CHANNEL).send(embed=embed)
