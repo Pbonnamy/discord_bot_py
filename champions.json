@@ -1,14 +1,62 @@
 [
   {
-    "name" : "xerath",
-    "image" : "xerath.jpg",
-    "points" : 1000,
+    "name" : "ekko",
+    "image" : "ekko.jpg",
+    "points" : 480,
     "owned_by": ""
   },
   {
-    "name" : "ekko",
-    "image" : "ekko.jpg",
-    "points" : 600,
+    "name" : "ezreal",
+    "image" : "ezreal.jpg",
+    "points" : 315,
+    "owned_by": ""
+  },
+  {
+    "name" : "fizz",
+    "image" : "fizz.jpg",
+    "points" : 480,
+    "owned_by": ""
+  },
+  {
+    "name" : "lucian",
+    "image" : "lucian.jpg",
+    "points" : 480,
+    "owned_by": ""
+  },
+  {
+    "name" : "nautilus",
+    "image" : "nautilus.jpg",
+    "points" : 480,
+    "owned_by": ""
+  },
+  {
+    "name" : "pyke",
+    "image" : "pyke.jpg",
+    "points" : 630,
+    "owned_by": ""
+  },
+  {
+    "name" : "ryze",
+    "image" : "ryze.jpg",
+    "points" : 45,
+    "owned_by": ""
+  },
+  {
+    "name" : "thresh",
+    "image" : "thresh.jpg",
+    "points" : 480,
+    "owned_by": ""
+  },
+  {
+    "name" : "xerath",
+    "image" : "xerath.jpg",
+    "points" : 480,
+    "owned_by": ""
+  },
+  {
+    "name" : "zed",
+    "image" : "zed.jpg",
+    "points" : 480,
     "owned_by": ""
   }
 ]
