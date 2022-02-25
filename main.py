@@ -12,7 +12,7 @@ client = discord.Client()
 @client.event
 async def on_ready():
     await client.get_channel(settings.LOG_CHANNEL).send(client.user.name + ' is **online**')
-    #await database.init_db(client)
+    await database.init_db(client)
 
     #threading.Thread(target=asyncio.run, args=(feed.get_esport_match(client),)).start()
     #threading.Thread(target=asyncio.run, args=(feed.get_patch_note(client),)).start()

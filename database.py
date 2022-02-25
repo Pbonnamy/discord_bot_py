@@ -33,6 +33,13 @@ async def create_tables(client):
 
     await client.get_channel(settings.LOG_CHANNEL).send('TABLE : feeds **initialised**')
 
+    settings.DB_CURSOR.execute("CREATE TABLE IF NOT EXISTS users ("
+                               "id BIGINT PRIMARY KEY NOT NULL,"
+                               "points INT"
+                               ") ENGINE = INNODB")
+
+    await client.get_channel(settings.LOG_CHANNEL).send('TABLE : users **initialised**')
+
 
 async def populate_tables(client):
     sql = "INSERT INTO feeds_types (id, type) VALUES (%s, %s)"
