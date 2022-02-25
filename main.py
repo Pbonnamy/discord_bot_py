@@ -3,6 +3,7 @@ import settings
 import feed
 import database
 import guess_champion
+import summon_champion
 import threading
 import asyncio
 
@@ -32,5 +33,8 @@ async def on_message(message):
 
         if message.content == '!help':
             await settings.help(client)
+
+        if message.content == '!summon':
+            await summon_champion.summon(client, message.author.id)
 
 client.run(settings.TOKEN)
