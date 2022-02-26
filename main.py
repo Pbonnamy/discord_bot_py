@@ -6,6 +6,7 @@ import guess_champion
 import summon_champion
 import threading
 import asyncio
+import myrank
 
 client = discord.Client()
 
@@ -46,5 +47,11 @@ async def on_message(message):
 
         if message.content == '!list':
             await summon_champion.champion_list(client, message.author.id)
+
+
+        if message.content.startswith('!rank'):
+            username = message.content.split(' ')[1]
+            rank = myrank.myrank(username)
+            await message.channel.send("Le rang de **"+username+"** est : ```| "+rank[0]+" : "+rank[1]+" | avec "+rank[2]+"```")
 
 client.run(settings.TOKEN)
