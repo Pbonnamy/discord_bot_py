@@ -50,8 +50,9 @@ async def on_message(message):
 
 
         if message.content.startswith('!rank'):
-            username = message.content.split(' ')[1]
-            rank = myrank.myrank(username)
-            await message.channel.send("Le rang de **"+username+"** est : ```| "+rank[0]+" : "+rank[1]+" | avec "+rank[2]+"```")
+            username = message.content.split(' ')
+            username.pop(0)
+            username = "%20".join(username)
+            await myrank.myrank(client,username)
 
 client.run(settings.TOKEN)
