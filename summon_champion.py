@@ -10,7 +10,8 @@ async def summon(client, user_id):
     result = settings.DB_CURSOR.fetchall()
 
     if len(result) == 0:
-        await client.get_channel(settings.CHANNEL).send('Impossible <@' + str(user_id) + '>, il te faut mininum 1000 💎.')
+        await client.get_channel(settings.CHANNEL).send(
+            'Impossible <@' + str(user_id) + '>, il te faut mininum 1000 💎.')
     else:
         champion = pick_champion()
         if champion is not None:
@@ -28,7 +29,8 @@ async def summon(client, user_id):
             await client.get_channel(settings.CHANNEL).send(file=file, embed=embed)
             handle_owned(user_id, champion['name'])
         else:
-            await client.get_channel(settings.CHANNEL).send('Impossible <@' + str(user_id) + '>, il n\'y a plus de champion disponible.')
+            await client.get_channel(settings.CHANNEL).send(
+                'Impossible <@' + str(user_id) + '>, il n\'y a plus de champion disponible.')
 
 
 def pick_champion():
@@ -90,7 +92,43 @@ async def sell(client, name, user_id):
                 settings.DB.commit()
 
                 sold = True
-                await client.get_channel(settings.CHANNEL).send('Tu as vendu '+champion['name']+' pour '+str(champion['points'])+' 💎, <@' + str(user_id) + '>')
+                await client.get_channel(settings.CHANNEL).send('Tu as vendu ' + champion['name'] + ' pour ' + str(champion['points']) + ' 💎, <@' + str(user_id) + '>')
         if not sold:
             await client.get_channel(settings.CHANNEL).send('Tu ne possède pas ce champion, <@' + str(user_id) + '>')
 
+
+async def champion_list(client, user_id):
+    with open("champions.json") as file:
+        content = json.load(file)
+
+        champions = '\u200b'
+        for champion in content:
+            if champion['owned_by'] == user_id:
+                champions += '**' + champion['name'] + '** ' + str(champion['points']) + ' 💎\n'
+
+        embed = discord.Embed(
+            title='Champions possédés',
+        )
+
+        embed.add_field(
+            name='\u200b',
+            value=champions,
+            inline=False
+        )
+
+        sql = "SELECT points FROM users WHERE id=" + str(user_id);
+        settings.DB_CURSOR.execute(sql)
+        result = settings.DB_CURSOR.fetchall()
+
+        points = 0
+
+        if len(result) != 0:
+            points = result[0][0]
+
+        embed.add_field(
+            name='\u200b',
+            value='```' + str(points) + ' 💎 possédés```',
+            inline=False
+        )
+
+        await client.get_channel(settings.CHANNEL).send(embed=embed)

@@ -31,7 +31,7 @@ async def guess(client):
     end = time.time() + timeout
     win = False
 
-    while time.time() < end:
+    while time.time() < end and win is not True:
         try:
             msg = await client.wait_for("message", check=check, timeout=end - time.time())
 

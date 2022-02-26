@@ -44,4 +44,7 @@ async def on_message(message):
             name = message.content.split(' ')[1]
             await summon_champion.sell(client, name, message.author.id)
 
+        if message.content == '!list':
+            await summon_champion.champion_list(client, message.author.id)
+
 client.run(settings.TOKEN)
