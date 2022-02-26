@@ -1,6 +1,8 @@
 import discord
 import os
 from dotenv import load_dotenv
+import requests
+from bs4 import BeautifulSoup
 
 client = discord.Client()
 load_dotenv()
@@ -8,6 +10,12 @@ load_dotenv()
 TOKEN = os.getenv('TOKEN')
 LOG_CHANNEL = int(os.getenv('LOG_CHANNEL'))
 CHANNEL = int(os.getenv('CHANNEL'))
+
+req = requests.get('https://euw.op.gg/champions')
+soup = BeautifulSoup(req.content, features="html.parser")
+
+res = soup.find("div", id="top-banner-ad")
+print(res)
 
 
 @client.event
