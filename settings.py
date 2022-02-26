@@ -25,6 +25,9 @@ commands = [
     "```!hello : tester le bot```",
     "```!help : lister les commandes du bot```",
     "```!guess : lancer le mini-jeu 'Who's that champion'```",
+    "```!summon : invoque un champion contre 1000 💎```",
+    "```!reset : remet à zéro la possession des champions invoqués```",
+    "```!sell <champion> : vends le champion demandé contre sa valeur en 💎```"
 ]
 
 

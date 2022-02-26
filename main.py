@@ -37,4 +37,11 @@ async def on_message(message):
         if message.content == '!summon':
             await summon_champion.summon(client, message.author.id)
 
+        if message.content == '!reset':
+            await summon_champion.reset(client)
+
+        if message.content.startswith('!sell'):
+            name = message.content.split(' ')[1]
+            await summon_champion.sell(client, name, message.author.id)
+
 client.run(settings.TOKEN)
