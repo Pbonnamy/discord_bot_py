@@ -1,0 +1,62 @@
+[
+  {
+    "name": "ekko",
+    "image": "ekko.jpg",
+    "points": 480,
+    "owned_by": null
+  },
+  {
+    "name": "ezreal",
+    "image": "ezreal.jpg",
+    "points": 315,
+    "owned_by": null
+  },
+  {
+    "name": "fizz",
+    "image": "fizz.jpg",
+    "points": 480,
+    "owned_by": null
+  },
+  {
+    "name": "lucian",
+    "image": "lucian.jpg",
+    "points": 480,
+    "owned_by": null
+  },
+  {
+    "name": "nautilus",
+    "image": "nautilus.jpg",
+    "points": 480,
+    "owned_by": null
+  },
+  {
+    "name": "pyke",
+    "image": "pyke.jpg",
+    "points": 630,
+    "owned_by": null
+  },
+  {
+    "name": "ryze",
+    "image": "ryze.jpg",
+    "points": 45,
+    "owned_by": null
+  },
+  {
+    "name": "thresh",
+    "image": "thresh.jpg",
+    "points": 480,
+    "owned_by": null
+  },
+  {
+    "name": "xerath",
+    "image": "xerath.jpg",
+    "points": 480,
+    "owned_by": null
+  },
+  {
+    "name": "zed",
+    "image": "zed.jpg",
+    "points": 480,
+    "owned_by": null
+  }
+]
