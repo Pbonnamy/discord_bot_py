@@ -6,6 +6,7 @@ import guess_champion
 import summon_champion
 import threading
 import asyncio
+import champion
 
 client = discord.Client()
 
@@ -38,7 +39,7 @@ async def on_message(message):
             await summon_champion.summon(client, message.author.id)
 
         if message.content == '!reset':
-            await summon_champion.reset(client)
+            await champion.reset(client)
 
         if message.content.startswith('!sell'):
             name = message.content.split(' ')[1]

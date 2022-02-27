@@ -1,7 +1,7 @@
 import settings
 import discord
 import json
-import random
+import champion
 
 
 async def summon(client, user_id):
@@ -13,88 +13,54 @@ async def summon(client, user_id):
         await client.get_channel(settings.CHANNEL).send(
             'Impossible <@' + str(user_id) + '>, il te faut mininum 1000 💎.')
     else:
-        champion = pick_champion()
-        if champion is not None:
-            file = discord.File("assets/basic/" + champion['image'], filename=champion['image'])
-
-            embed = discord.Embed(
-                title='Tu as invoqué : ' + champion['name'].capitalize(),
-                description='Valeur : ' + str(champion['points']) + ' 💎'
-            )
-
-            embed.set_image(
-                url="attachment://" + champion['image']
-            )
-
-            await client.get_channel(settings.CHANNEL).send(file=file, embed=embed)
-            handle_owned(user_id, champion['name'])
-        else:
-            await client.get_channel(settings.CHANNEL).send(
-                'Impossible <@' + str(user_id) + '>, il n\'y a plus de champion disponible.')
+        try:
+            champ = champion.rand_available()
+        except:
+            await client.get_channel(settings.CHANNEL).send('Impossible <@' + str(user_id) + '>, il n\'y a plus de champion disponible.')
+            return
 
 
-def pick_champion():
-    with open("champions.json") as file:
-        content = json.load(file)
+        file = discord.File("assets/basic/" + champ.image, filename=champ.image)
 
-        available = [champ for champ in content if champ['owned_by'] is None]
+        embed = discord.Embed(
+            title='Tu as invoqué : ' + champ.name.capitalize(),
+            description='Valeur : ' + str(champ.points) + ' 💎'
+        )
 
-        if len(available) == 0:
-            return None
-        else:
-            return available[random.randint(0, len(available) - 1)]
+        embed.set_image(
+            url="attachment://" + champ.image
+        )
 
+        await client.get_channel(settings.CHANNEL).send(file=file, embed=embed)
 
-def handle_owned(user_id, name):
-    sql = "UPDATE users SET points = points-%s WHERE id=%s"
-    val = (1000, user_id)
+        sql = "UPDATE users SET points = points-%s WHERE id=%s"
+        val = (1000, user_id)
 
-    settings.DB_CURSOR.execute(sql, val)
-    settings.DB.commit()
+        settings.DB_CURSOR.execute(sql, val)
+        settings.DB.commit()
 
-    with open("champions.json", "r+") as file:
-        content = json.load(file)
-        for champion in content:
-            if champion['name'] == name:
-                champion['owned_by'] = user_id
-        file.seek(0)
-        json.dump(content, file, indent=2)
-        file.truncate()
-
-
-async def reset(client):
-    with open("champions.json", "r+") as file:
-        content = json.load(file)
-        for champion in content:
-            if champion['owned_by'] is not None:
-                champion['owned_by'] = None
-        file.seek(0)
-        json.dump(content, file, indent=2)
-        file.truncate()
-
-    await client.get_channel(settings.CHANNEL).send('Champions possédés remis à zéro')
+        champ.owned_by = user_id
 
 
 async def sell(client, name, user_id):
-    with open("champions.json", "r+") as file:
-        content = json.load(file)
-        sold = False
-        for champion in content:
-            if champion['name'] == name and champion['owned_by'] == user_id:
-                champion['owned_by'] = None
-                file.seek(0)
-                json.dump(content, file, indent=2)
-                file.truncate()
 
-                sql = "UPDATE users SET points = points+%s WHERE id=%s"
-                val = (champion['points'], user_id)
-                settings.DB_CURSOR.execute(sql, val)
-                settings.DB.commit()
+    try:
+        champ = champion.Champion(name)
+    except:
+        await client.get_channel(settings.CHANNEL).send('Ce champion n\'existe pas, <@' + str(user_id) + '>')
+        return
 
-                sold = True
-                await client.get_channel(settings.CHANNEL).send('Tu as vendu ' + champion['name'] + ' pour ' + str(champion['points']) + ' 💎, <@' + str(user_id) + '>')
-        if not sold:
-            await client.get_channel(settings.CHANNEL).send('Tu ne possède pas ce champion, <@' + str(user_id) + '>')
+    if champ.owned_by == user_id:
+        sql = "UPDATE users SET points = points+%s WHERE id=%s"
+        val = (champ.points, user_id)
+        settings.DB_CURSOR.execute(sql, val)
+        settings.DB.commit()
+
+        champ.owned_by = None
+
+        await client.get_channel(settings.CHANNEL).send( 'Tu as vendu ' + champ.name + ' pour ' + str(champ.points) + ' 💎, <@' + str(user_id) + '>')
+    else:
+        await client.get_channel(settings.CHANNEL).send('Tu ne possède pas ce champion, <@' + str(user_id) + '>')
 
 
 async def champion_list(client, user_id):
@@ -102,9 +68,9 @@ async def champion_list(client, user_id):
         content = json.load(file)
 
         champions = '\u200b'
-        for champion in content:
-            if champion['owned_by'] == user_id:
-                champions += '**' + champion['name'] + '** ' + str(champion['points']) + ' 💎\n'
+        for champ in content:
+            if champ['owned_by'] == user_id:
+                champions += '**' + champ['name'] + '** ' + str(champ['points']) + ' 💎\n'
 
         embed = discord.Embed(
             title='Champions possédés',
