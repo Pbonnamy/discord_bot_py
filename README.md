@@ -41,6 +41,11 @@
   - commande ```!rest``` ➔ remet à zéro les possession de champion
 - Commande ```!help``` pour référencer les commandes existantes
 
+### Tianqi :
+- stastique du Info de champion
+  - commande ```!info``` ➔ info du champion
+  - commande ```!counter``` ➔ liste les champions de counter
+
 ---
 
 ### Ressources utilisées
@@ -66,3 +71,4 @@ Autres ressources:
 --- 
 
 - lien du dépot : https://github.com/Pbonnamy/discord_bot_py
+

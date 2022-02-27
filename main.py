@@ -5,6 +5,7 @@ import database
 import guess_champion
 import summon_champion
 import champion
+import champion_stats
 
 client = discord.Client()
 
@@ -27,6 +28,14 @@ async def on_message(message):
         if message.content == '!hello':
             await message.channel.send('Hello <@' + str(message.author.id) + '> !')
 
+        if message.content.startswith('!info'):
+            name = message.content.split(' ')[1]
+            await champion_stats.get_champion(message, name)
+
+        if message.content.startswith('!counter'):
+            name = message.content.split(' ')[1]
+            await champion_stats.get_counter_champion(message, name)
+
         if message.content == '!guess':
             await guess_champion.guess(client)
 
@@ -45,5 +54,6 @@ async def on_message(message):
 
         if message.content == '!list':
             await summon_champion.champion_list(client, message.author.id)
+
 
 client.run(settings.TOKEN)
