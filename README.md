@@ -38,13 +38,17 @@
   - commande ```!summon``` ➔ invoque un champion
   - commande ```!list``` ➔ liste les champions de l'utilisateur
   - commande ```!sell <champion>``` ➔ vends un champion possédé
-  - commande ```!rest``` ➔ remet à zéro les possession de champion
+  - commande ```!reset``` ➔ remet à zéro les possession de champion
 - Commande ```!help``` pour référencer les commandes existantes
 
 ### Tianqi :
 - Statistiques d'un champion
-  - commande ```!info``` ➔ info du champion
-  - commande ```!counter``` ➔ liste les champions de counter
+  - commande ```!info <champion>``` ➔ Affiche un lien vers les info du champion
+  - commande ```!counter <champion>``` ➔ Affiche les champions forts et faibles contre le champion demandé
+  
+### Charles :
+- Statistiques d'un joueur
+  - commande ```!rank <pseudo>``` ➔ affiche le rang et les infos d'un joueur
 
 ---
 
@@ -71,4 +75,3 @@ Autres ressources:
 --- 
 
 - lien du dépot : https://github.com/Pbonnamy/discord_bot_py
-

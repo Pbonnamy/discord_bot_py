@@ -31,7 +31,7 @@ commands = [
     "```!list : affiche la liste des champions possédés de l'utilisateur```",
     "```!info <champion> : Affiche un lien vers les info du champion```",
     "```!counter <champion> : Affiche les champions forts et faibles contre le champion demandé ```",
-    "```!rank <pseudo_lol> : affiche le rang et les infos d'un utilisateur 'lol'```"
+    "```!rank <pseudo> : affiche le rang et les infos d'un joueur'```"
 ]
 
 
