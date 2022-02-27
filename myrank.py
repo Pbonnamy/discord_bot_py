@@ -19,54 +19,66 @@ async def myrank(client, username):
 
     soup = BeautifulSoup(req.content, features="html.parser")
 
-    rank_tier = soup.find("div", class_="tier-rank").text
-    lp = soup.find("span", class_="lp").text
-    win_lose = soup.find("span", class_="win-lose").text
-    rank_logo = soup.find("div", class_="medal").find("div").find("img")
-    rank_logo = rank_logo['src']
+    find_rank = soup.find("div", class_="tier-rank")
 
-    find_L = win_lose.find("L") + 1
-    win_lose = my_split(win_lose)
-    win_lose.insert(find_L," - ")
-    win_lose = "".join(win_lose)
+    if find_rank != None:
 
-    win_lose = win_lose.split("-", 1)
-    winrate = win_lose[1]
-    win_lose = win_lose[0]
+        rank_tier = soup.find("div", class_="tier-rank").text
+        lp = soup.find("span", class_="lp").text
+        win_lose = soup.find("span", class_="win-lose").text
+        rank_logo = soup.find("div", class_="medal").find("div").find("img")
+        rank_logo = rank_logo['src']
 
-    rank = [rank_tier,lp,win_lose,winrate,rank_logo]
+        find_L = win_lose.find("L") + 1
+        win_lose = my_split(win_lose)
+        win_lose.insert(find_L," - ")
+        win_lose = "".join(win_lose)
 
-    most_played_champ = soup.find("div", class_="champion-box").find("div", class_="info").find("div", class_="name").find("a").text
+        win_lose = win_lose.split("-", 1)
+        winrate = win_lose[1]
+        win_lose = win_lose[0]
 
-    username = username.split('%20')
-    username = " ".join(username)
+        rank = [rank_tier,lp,win_lose,winrate,rank_logo]
 
-    embed = discord.Embed(
-        color=discord.Color.blue(),
-        title='Rang de "'+username+'"',
-        url=used_url,
-        #description="v v v v v v",
-        #description=rank[0] + " : " + rank[1] + " ----> " + rank[2],
+        most_played_champ = soup.find("div", class_="champion-box").find("div", class_="info").find("div", class_="name").find("a").text
 
-    )
+        username = username.split('%20')
+        username = " ".join(username)
 
-    embed.set_image(
-        url=rank_logo
-    )
+        embed = discord.Embed(
+            color=discord.Color.blue(),
+            title='Rang de "'+username+'"',
+            url=used_url,
+            #description="v v v v v v",
+            #description=rank[0] + " : " + rank[1] + " ----> " + rank[2],
 
-    #embed.set_thumbnail(url=used_url)
+        )
 
-    embed.add_field(name="Rang : ", value=rank[0], inline=True)
-    embed.add_field(name="LP : ", value=rank[1], inline=True)
-    embed.add_field(name="\u200B", value="\u200B", inline=False)
-    embed.add_field(name="Win-Lose : ", value=rank[2], inline=True)
-    embed.add_field(name="Winrate : ", value=rank[3], inline=True)
-    embed.add_field(name="\u200B", value="\u200B", inline=False)
-    embed.add_field(name="Champion le plus joué :", value=most_played_champ, inline=False)
+        embed.set_image(
+            url=rank_logo
+        )
 
-    #embed.set_image(
-    #    url="attachment://" + champion['image']
-    #)
+        #embed.set_thumbnail(url=used_url)
+
+        embed.add_field(name="Rang : ", value=rank[0], inline=True)
+        embed.add_field(name="LP : ", value=rank[1], inline=True)
+        embed.add_field(name="\u200B", value="\u200B", inline=False)
+        embed.add_field(name="Win-Lose : ", value=rank[2], inline=True)
+        embed.add_field(name="Winrate : ", value=rank[3], inline=True)
+        embed.add_field(name="\u200B", value="\u200B", inline=False)
+        embed.add_field(name="Champion le plus joué :", value=most_played_champ, inline=False)
+
+        #embed.set_image(
+        #    url="attachment://" + champion['image']
+        #)
+
+    else :
+        embed = discord.Embed(
+            color=discord.Color.red(),
+            title='Erreur',
+            url=used_url,
+        )
+        embed.add_field(name=":no_entry_sign: Erreur :", value=":no_entry_sign: Nous n'avons pas trouvé l'utilisateur, ou l'utilisateur est 'unranked'", inline=False)
 
     await client.get_channel(settings.CHANNEL).send(embed=embed)
     #return rank

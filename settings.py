@@ -28,7 +28,8 @@ commands = [
     "```!summon : invoque un champion contre 1000 💎```",
     "```!reset : remet à zéro la possession des champions invoqués```",
     "```!sell <champion> : vends le champion demandé contre sa valeur en 💎```",
-    "```!list : affiche la liste des champions possédés de l'utilisateur```"
+    "```!list : affiche la liste des champions possédés de l'utilisateur```",
+    "```!rank <pseudo_lol> : affiche le rang et les infos d'un utilisateur 'lol'```"
 ]
 
 
