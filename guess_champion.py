@@ -5,7 +5,6 @@ import time
 import champion
 
 
-
 def check(msg):
     return msg.channel.id == settings.CHANNEL
 
