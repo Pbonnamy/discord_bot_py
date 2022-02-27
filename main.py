@@ -6,6 +6,7 @@ import guess_champion
 import summon_champion
 import champion
 import champion_stats
+import myrank
 
 client = discord.Client()
 
@@ -54,6 +55,12 @@ async def on_message(message):
 
         if message.content == '!list':
             await summon_champion.champion_list(client, message.author.id)
+
+        if message.content.startswith('!rank'):
+            username = message.content.split(' ')
+            username.pop(0)
+            username = "%20".join(username)
+            await myrank.myrank(client, username)
 
 
 client.run(settings.TOKEN)

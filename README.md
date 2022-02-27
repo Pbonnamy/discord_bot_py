@@ -42,7 +42,7 @@
 - Commande ```!help``` pour référencer les commandes existantes
 
 ### Tianqi :
-- stastique du Info de champion
+- Statistiques d'un champion
   - commande ```!info``` ➔ info du champion
   - commande ```!counter``` ➔ liste les champions de counter
 
