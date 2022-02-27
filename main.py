@@ -4,8 +4,6 @@ import feed
 import database
 import guess_champion
 import summon_champion
-import threading
-import asyncio
 import champion
 
 client = discord.Client()
@@ -16,8 +14,8 @@ async def on_ready():
     await client.get_channel(settings.LOG_CHANNEL).send(client.user.name + ' is **online**')
     await database.init_db(client)
 
-    #threading.Thread(target=asyncio.run, args=(feed.get_esport_match(client),)).start()
-    #threading.Thread(target=asyncio.run, args=(feed.get_patch_note(client),)).start()
+    client.loop.create_task(feed.get_esport_match(client))
+    client.loop.create_task(feed.get_patch_note(client))
 
 
 @client.event
