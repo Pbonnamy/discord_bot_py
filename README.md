@@ -1,4 +1,4 @@
-##Bot Discord : League of Legends
+## Bot Discord : League of Legends
 
 ---
 
@@ -26,9 +26,9 @@
 
 ---
 
-###Répartition des taches
+### Répartition des taches
 
-###Pierre :
+### Pierre :
 - Intégration de la base de donnée
 - Feed de patchnote
 - Feed de match esport
@@ -43,7 +43,7 @@
 
 ---
 
-###Ressources utilisées
+### Ressources utilisées
 
 Librairies :
   - discord.py ➔ https://discordpy.readthedocs.io/en/stable/
@@ -62,3 +62,7 @@ Ressources de scraping :
 Autres ressources:
   - https://stackoverflow.com/
   - https://www.w3schools.com/python/python_mysql_getstarted.asp
+
+--- 
+
+- lien du dépot : https://github.com/Pbonnamy/discord_bot_py
