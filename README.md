@@ -39,6 +39,7 @@
   - commande ```!list``` ➔ liste les champions de l'utilisateur
   - commande ```!sell <champion>``` ➔ vends un champion possédé
   - commande ```!rest``` ➔ remet à zéro les possession de champion
+- Commande ```!help``` pour référencer les commandes existantes
 
 ---
 
